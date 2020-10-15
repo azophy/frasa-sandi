@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Diceware / Passphrase Generator / XKCD-style Password Generator Bahasa Indonesia</title>
+  <style>
+    .container {
+      margin: auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #result {
+      font-weight:bold;
+      color:#222;
+      padding: 10px;
+      margin: 10px;
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Diceware / Passphrase Generator / XKCD-style Password Generator Bahasa Indonesia</h1>
+
+  <hr/>
+  <h3>Passphrase yang bisa dipakai:</h3>
+
+  <span id="result"></span>
+  <br/>
+  <br/>
+
+  <div>
+    Jumlah kata: <input type="number" min="1" max="100" size="3" value="4" id="wordnum">
+    <button id="generate" onclick="generate()">Buat Baru</button>
+  </div>
+  <hr/>
+
+  <p>Hindari penggunaan password yang sama di banyak situs. Lebih baik gunakan password acak yang berbeda untuk tiap situs. Agar password mudah diingat bisa menggunakan software diceware/passphrase generator seperti yang ada di situs ini.</p>
+
+  <p>Passphrase sederhananya adalah password namun berupa kalimat yang mudah dibaca dan diingat oleh manusia. Passphrase yang dihasilkan di situs ini 100% dibuat di sisi browser, dan kami sama sekali tidak menyimpan passphrase yang dihasilkan.</p>
+
+  <p>Situs ini adalah software open source, dilisesikan dengan <a href="https://mit-license.org/">Lisensi MIT</a>.</p>
+
+  <p>Referensi:
+  <ul>
+    <li>Fungsi kriptografi yang digunakan: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues">crypto.getRandomValues</a></li>
+    <li>Daftar kata yang digunakan: <a href="https://github.com/geovedi/indonesian-wordlist/blob/master/05-ivanlanin2011-sort-alpha.lst">https://github.com/geovedi/indonesian-wordlist/blob/master/05-ivanlanin2011-sort-alpha.lst</a> (18314 kata)</li>
+  </ul>
+  </p>
+
+  <hr/>
+  <div class="footer">
+    Dibuat oleh <a href="https://abdurrahman.adianto.id">Abdurrahman Shofy Adianto</a> , 2020. Dilisensikan di bawah <a href="https://mit-license.org/">MIT License</a>. Kode sumber: <a href="https://github.com/azophy/passphrase">Github</a>
+  </div>
+
+</div><!-- container end -->
+
+<script>
+var wordlist, wordlist_length,
+    wordlist_path = './geovedi_indonesian-wordlist_05-ivanlanin2011-sort-alpha.lst'
+    ;
+
+function generate() {
+  var wordnum = document.getElementById('wordnum').value;
+
+  var random_array = new Uint16Array(wordnum);
+  window.crypto.getRandomValues(random_array);
+
+  var result = Array.from(random_array).map(function(i) {
+      return wordlist[i % wordlist_length];
+  });
+
+  document.getElementById('result').innerText = result.join(' ');
+}
+
+// get wordlist
+var r = new XMLHttpRequest();
+r.open("GET", wordlist_path, true);
+r.onreadystatechange = function () {
+    if (r.readyState != 4 || r.status != 200) return;
+    wordlist = r.responseText.split("\n");
+    wordlist_length = wordlist.length;
+    console.log('wordlist:' + wordlist);
+
+    generate();
+};
+r.send();
+
+</script>
+</body>
+</html>
