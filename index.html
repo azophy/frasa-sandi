@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Diceware / Passphrase Generator / XKCD-style Password Generator Bahasa Indonesia</title>
+  <title>Generator Kalimat Sandi | Diceware / Passphrase Generator / XKCD-style Password Generator Bahasa Indonesia</title>
   <style>
     .container {
       margin: auto;
@@ -29,16 +29,13 @@
 
 <div class="container">
 
-  <h1>Diceware / Passphrase Generator / <br/>
-    XKCD-style Password Generator <br/>
-    Bahasa Indonesia</h1>
+  <h1>Generator Kalimat Sandi</h1>
+  <h2>Diceware / Passphrase Generator / XKCD-style Password Generator Bahasa Indonesia</h2>
 
   <hr/>
   <h3>Passphrase yang bisa dipakai:</h3>
 
-  <span id="result">loading...</span>
-  <br/>
-  <br/>
+  <div id="result">loading...</div>
 
   <div>
     Jumlah kata: <input type="number" min="1" max="100" size="3" value="4" id="wordnum">
@@ -46,16 +43,18 @@
   </div>
   <hr/>
 
-  <p>Hindari penggunaan password yang sama di banyak situs. Lebih baik gunakan password acak yang berbeda untuk tiap situs. Agar password mudah diingat bisa menggunakan software diceware/passphrase generator seperti yang ada di situs ini.</p>
+  <p>Penjelasan menarik dari <a href="https://xkcd.com/936/" target="_blank">komik XKCD</a>.
 
-  <p>Passphrase sederhananya adalah password namun berupa kalimat yang mudah dibaca dan diingat oleh manusia. Passphrase yang dihasilkan di situs ini 100% dibuat di sisi browser, dan kami sama sekali tidak menyimpan passphrase yang dihasilkan.</p>
+  <p>
+    <img src="https://imgs.xkcd.com/comics/password_strength.png" />
+  </p>
 
   <p>Situs ini adalah software open source, dilisesikan dengan <a href="https://mit-license.org/">Lisensi MIT</a>.</p>
 
   <p>Referensi:
   <ul>
     <li>Fungsi kriptografi yang digunakan: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues">crypto.getRandomValues</a></li>
-    <li>Daftar kata yang digunakan: <a href="https://github.com/geovedi/indonesian-wordlist/blob/master/05-ivanlanin2011-sort-alpha.lst">https://github.com/geovedi/indonesian-wordlist/blob/master/05-ivanlanin2011-sort-alpha.lst</a> (18314 kata)</li>
+    <li>Daftar kata yang digunakan adalah modifikasi dari list : <a href="https://github.com/ardwort/freq-dist-id/blob/master/data/kompas.1gram">https://github.com/ardwort/freq-dist-id/blob/master/data/kompas.1gram</a> (2048 kata)</li>
   </ul>
   </p>
 
@@ -68,7 +67,7 @@
 
 <script>
 var wordlist, wordlist_length,
-    wordlist_path = './geovedi_indonesian-wordlist_05-ivanlanin2011-sort-alpha.lst'
+    wordlist_path = './wordlist/kompas.lst'
     ;
 
 function generate() {
@@ -89,7 +88,7 @@ var r = new XMLHttpRequest();
 r.open("GET", wordlist_path, true);
 r.onreadystatechange = function () {
     if (r.readyState != 4 || r.status != 200) return;
-    wordlist = r.responseText.split("\n");
+    wordlist = r.responseText.split("\r\n");
     wordlist_length = wordlist.length;
     console.log('wordlist:' + wordlist);
 
