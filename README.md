@@ -1,6 +1,5 @@
 Generator Kalimat Sandi Bahasa Indonesia
-
-============
+========================================
 
 Ini adalah software Diceware / Passphrase Generator / XKCD-style Password Generator untuk Bahasa Indonesia
 
