@@ -5,7 +5,7 @@ pages:
   script:
   - mkdir public
   - cp ./*.* public/
-  - cp ./wordlist public/
+  - cp -r ./wordlist public/
   artifacts:
     paths:
     - public
