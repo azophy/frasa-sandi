@@ -56,11 +56,12 @@
   <hr/>
   <h3>Kalimat sandi yang bisa dipakai:</h3>
 
-  <div id="result">loading...</div>
+  <div id="result" onclick="copy_to_clipboard()">loading...</div>
 
   <div>
     Jumlah kata: <input type="number" min="1" max="100" size="3" value="4" id="wordnum">
     <button id="generate" onclick="generate()">Buat Baru</button>
+    <button id="copytoclipboard" onclick="copy_to_clipboard()">Salin ke clipboard</button>
   </div>
   <hr/>
 
@@ -103,6 +104,20 @@ function generate() {
 
   document.getElementById('result').innerText = result.join(' ');
 }
+
+function copy_to_clipboard() {
+    /* ref: https://stackoverflow.com/a/48020189 */
+
+    var range = document.createRange();
+    range.selectNode(document.getElementById("result"));
+    window.getSelection().removeAllRanges(); // clear current selection
+    window.getSelection().addRange(range); // to select text
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();// to deselect
+
+    // Alert the copied text
+    alert('Kalimat sandi berhasil disalin');
+} 
 
 // get wordlist
 var r = new XMLHttpRequest();
